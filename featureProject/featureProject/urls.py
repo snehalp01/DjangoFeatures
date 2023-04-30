@@ -14,8 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from boards import views
+
+from rest_framework.routers import DefaultRouter
+from boards import viewsets
+
+router = DefaultRouter()
+router.register('board', viewsets.BoardsModelViewSet, basename='model')
+
 
 urlpatterns = [
+    path('model/', include(router.urls)),
+    path('quora/',include('boards.urls'), name='quora'),
+    path('account/',include('account.urls'), name='account'),
     path('admin/', admin.site.urls),
 ]
